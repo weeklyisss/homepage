@@ -22,26 +22,26 @@
     .filter-btn:hover{color:var(--ink);border-color:var(--ink-soft)}.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
     .sessions-wrap{max-width:1100px;margin:0 auto;padding:0 3rem 4rem}
     .group-label{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.5rem 0;border-bottom:1px solid var(--line);margin-bottom:1px}
-    .session-row{background:var(--paper);border-bottom:1px solid var(--line);padding:1.4rem 1.6rem;display:grid;grid-template-columns:120px 1fr auto;gap:1.5rem;align-items:start;transition:background .12s;border-left:3px solid transparent}
+    .session-row{background:var(--paper);border-bottom:1px solid var(--line);padding:1.4rem 1.6rem;display:grid;grid-template-columns:120px 1fr;gap:1.5rem;align-items:start;transition:background .12s;border-left:3px solid transparent}
     .session-row:hover{background:#fdf9fa}.session-row.featured{border-left-color:var(--burgundy)}
     .row-week{font-family:'Fira Code',monospace;font-size:0.66rem;color:var(--muted);padding-top:3px}
     .row-body h3{font-size:0.92rem;font-weight:600;margin-bottom:0.35rem;line-height:1.4}
     .tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
     .tag-paper{background:var(--burgundy-lt);color:var(--burgundy)}.tag-open{background:#f5f0e8;color:#7a5500}
     .tags-row{display:flex;gap:0.4rem;margin-bottom:0.5rem;flex-wrap:wrap}
-    .mini-talks{display:flex;flex-direction:column;gap:0.5rem;margin:0.3rem 0 0.5rem}
-    .mini-talk{display:flex;align-items:baseline;gap:0.75rem}
+    .mini-talks{display:flex;flex-direction:column;gap:0.6rem;margin:0.3rem 0 0.5rem}
+    .mini-talk{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
     .presenter-chip{display:flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--ink-soft);flex-shrink:0;min-width:160px}
     .avatar{width:22px;height:22px;border-radius:50%;background:var(--burgundy-lt);color:var(--burgundy);font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5}
-    .row-links{display:flex;flex-direction:column;gap:0.4rem;align-items:flex-end;padding-top:2px}
+    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5;flex:1;min-width:0}
+    .talk-links{display:flex;gap:0.3rem;flex-shrink:0}
     .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block;white-space:nowrap}
     .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.pill-red{color:var(--burgundy);border-color:#e0bec5}.pill-red:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
     .site-footer{border-top:1px solid var(--line);background:var(--paper);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted)}
     .site-footer-name{font-size:0.78rem;font-weight:500;color:var(--ink-soft)}.site-footer-links{display:flex;gap:1.5rem}
     .site-footer-links a{color:var(--muted);transition:color .15s}.site-footer-links a:hover{color:var(--ink)}
     .loading{padding:2rem;text-align:center;font-size:0.82rem;color:var(--muted)}
-    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.page-header{padding:2rem 1.5rem 1.75rem}.filters{padding:1rem 1.5rem}.sessions-wrap{padding:0 1.5rem 3rem}.session-row{grid-template-columns:1fr;gap:0.5rem}.row-links{flex-direction:row;align-items:flex-start}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
+    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.page-header{padding:2rem 1.5rem 1.75rem}.filters{padding:1rem 1.5rem}.sessions-wrap{padding:0 1.5rem 3rem}.session-row{grid-template-columns:1fr;gap:0.5rem}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
   </style>
 </head>
 <body>
@@ -73,6 +73,13 @@
 <script src="data.js"></script><script src="sheets.js"></script>
 <script>
 const pad = n => String(n).padStart(2,'0');
+function talkHTML(t) {
+  const links = [
+    t.youtube ? `<a href="${t.youtube}" target="_blank" class="pill pill-red">YouTube</a>` : '',
+    t.slides   ? `<a href="${t.slides}"  target="_blank" class="pill">Slides</a>`          : '',
+  ].filter(Boolean).join('');
+  return `<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div>${links ? `<div class="talk-links">${links}</div>` : ''}</div>`;
+}
 (async()=>{
   const el = document.getElementById('session-rows');
   try {
@@ -80,10 +87,8 @@ const pad = n => String(n).padStart(2,'0');
     el.innerHTML = sessions.map((s,i)=>{
       const meta = TYPE_META[s.type]||TYPE_META.paper;
       const title = s.talks.length>1?'Open Sharing — Three Talks':s.talks[0].title;
-      const talks = s.talks.map(t=>`<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div></div>`).join('');
-      const yt = s.talks.find(t=>t.youtube), pdf = s.talks.find(t=>t.slides);
-      const links = (yt||pdf)?`${yt?`<a href="${yt.youtube}" target="_blank" class="pill pill-red">YouTube</a>`:''} ${pdf?`<a href="${pdf.slides}" target="_blank" class="pill">Slides</a>`:''}` :'—';
-      return `<div class="session-row ${i===0?'featured':''}" data-type="${s.type}"><div class="row-week">Week ${pad(s.week)}<br>${s.date}</div><div class="row-body"><div class="tags-row"><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div></div><div class="row-links">${links}</div></div>`;
+      const talks = s.talks.map(t=>talkHTML(t)).join('');
+      return `<div class="session-row ${i===0?'featured':''}" data-type="${s.type}"><div class="row-week">Week ${pad(s.week)}<br>${s.date}</div><div class="row-body"><div class="tags-row"><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div></div></div>`;
     }).join('');
   } catch(e) { showError(el,'Google Sheets 연결을 확인해주세요.'); }
 })();

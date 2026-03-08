@@ -37,13 +37,13 @@
     .tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
     .tag-paper{background:var(--burgundy-lt);color:var(--burgundy)}.tag-open{background:#f5f0e8;color:#7a5500}
     .session-card h3{font-size:0.92rem;font-weight:600;line-height:1.4;margin-bottom:0.6rem}
-    .mini-talks{display:flex;flex-direction:column;gap:0.55rem;margin-bottom:0.5rem}
-    .mini-talk{display:flex;align-items:baseline;gap:0.75rem}
+    .mini-talks{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:0.5rem}
+    .mini-talk{display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
     .presenter-chip{display:flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--ink-soft);flex-shrink:0;min-width:160px}
     .avatar{width:22px;height:22px;border-radius:50%;background:var(--burgundy-lt);color:var(--burgundy);font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5}
-    .session-links{display:flex;gap:0.45rem;margin-top:0.9rem}
-    .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block}
+    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5;flex:1;min-width:0}
+    .talk-links{display:flex;gap:0.3rem;flex-shrink:0}
+    .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block;white-space:nowrap}
     .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.pill-red{color:var(--burgundy);border-color:#e0bec5}.pill-red:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
     .sidebar{display:flex;flex-direction:column;gap:1.75rem;position:sticky;top:68px}.sidebar-block{background:var(--paper);border:1px solid var(--line)}
     .sidebar-head{padding:0.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
@@ -137,13 +137,18 @@ function getYouTubeId(url) {
   const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
   return m ? m[1] : null;
 }
+function talkHTML(t) {
+  const links = [
+    t.youtube ? `<a href="${t.youtube}" target="_blank" class="pill pill-red">YouTube</a>` : '',
+    t.slides   ? `<a href="${t.slides}"  target="_blank" class="pill">Slides</a>`          : '',
+  ].filter(Boolean).join('');
+  return `<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div>${links ? `<div class="talk-links">${links}</div>` : ''}</div>`;
+}
 function cardHTML(s, featured) {
   const meta = TYPE_META[s.type] || TYPE_META.paper;
   const title = s.talks.length > 1 ? 'Open Sharing — Three Talks' : s.talks[0].title;
-  const talks = s.talks.map(t => `<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div></div>`).join('');
-  const yt = s.talks.find(t=>t.youtube), pdf = s.talks.find(t=>t.slides);
-  const links = (yt||pdf) ? `<div class="session-links">${yt?`<a href="${yt.youtube}" target="_blank" class="pill pill-red">Watch on YouTube</a>`:''} ${pdf?`<a href="${pdf.slides}" target="_blank" class="pill">Slides (PDF)</a>`:''}</div>` : '';
-  return `<div class="session-card ${featured?'featured':''}"><div class="session-top"><span class="session-week">Week ${pad(s.week)} · ${s.date}</span><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div>${links}</div>`;
+  const talks = s.talks.map(t => talkHTML(t)).join('');
+  return `<div class="session-card ${featured?'featured':''}"><div class="session-top"><span class="session-week">Week ${pad(s.week)} · ${s.date}</span><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div></div>`;
 }
 function ytCardHTML(v) {
   const vid = getYouTubeId(v.youtube);
