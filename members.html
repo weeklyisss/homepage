@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Members — Weekly ISSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--burgundy:#8a0019;--burgundy-dk:#5b0013;--burgundy-lt:#f5eaed;--ink:#1c1c1e;--ink-soft:#444448;--muted:#888892;--paper:#ffffff;--bg:#f8f7f7;--line:#e4e0e1}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body,input,select,textarea,button{font-family:'Fira Sans',sans-serif}
+    body{font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg)}a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:200;height:52px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3rem}
+    .nav-logo{font-family:'Fira Code',monospace;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;color:var(--burgundy)}
+    .nav-links{list-style:none;display:flex;gap:2.5rem}.nav-links a{font-size:0.82rem;color:var(--muted);transition:color .15s}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);font-weight:500}
+    .page-header{background:var(--paper);border-bottom:1px solid var(--line);padding:3rem 3rem 2.5rem}.page-header-inner{max-width:1100px;margin:0 auto}
+    .back{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;display:inline-flex;align-items:center;gap:4px;transition:color .15s}.back:hover{color:var(--ink)}
+    .page-header h1{font-size:2rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.4rem}.page-header p{font-size:0.88rem;color:var(--muted)}
+    .members-wrap{max-width:1100px;margin:0 auto;padding:3rem 3rem 4rem}
+    .members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+    .member-card{background:var(--paper);padding:1.75rem 2rem;transition:background .12s}.member-card:hover{background:#fdf9fa}
+    .member-top{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:1rem}
+    .member-avatar{width:48px;height:48px;border-radius:50%;color:#fff;font-size:1rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .c1{background:#8a0019}.c2{background:#1a4a7a}.c3{background:#1a6640}.c4{background:#5b3a00}.c5{background:#4a1a7a}.c6{background:#7a3a00}
+    .member-name{font-size:0.95rem;font-weight:600;margin-bottom:0.15rem}.member-role{font-size:0.76rem;color:var(--muted)}
+    .member-affil{font-size:0.78rem;color:var(--ink-soft);margin-bottom:0.85rem;line-height:1.5}
+    .member-links{display:flex;gap:0.5rem}
+    .member-link{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--muted);transition:all .12s}
+    .member-link:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .site-footer{border-top:1px solid var(--line);background:var(--paper);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted)}
+    .site-footer-name{font-size:0.78rem;font-weight:500;color:var(--ink-soft)}.site-footer-links{display:flex;gap:1.5rem}
+    .site-footer-links a{color:var(--muted);transition:color .15s}.site-footer-links a:hover{color:var(--ink)}
+    .loading{padding:2rem;text-align:center;font-size:0.82rem;color:var(--muted)}
+    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.page-header{padding:2rem 1.5rem 1.75rem}.members-wrap{padding:2rem 1.5rem 3rem}.members-grid{grid-template-columns:1fr}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Weekly ISSS</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sessions.html">Sessions</a></li>
+    <li><a href="members.html" class="active">Members</a></li>
+  </ul>
+</nav>
+<div class="page-header"><div class="page-header-inner">
+  <a href="index.html" class="back">&larr; Home</a>
+  <h1>Members</h1><p>IS researchers who make up the Weekly ISSS community.</p>
+</div></div>
+<div class="members-wrap">
+  <div class="members-grid" id="members-grid"><div class="loading">Loading…</div></div>
+</div>
+<div style="background:var(--paper)"><footer class="site-footer">
+  <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
+  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="https://youtube.com" target="_blank">YouTube</a><a href="sessions.html">Sessions</a></div>
+</footer></div>
+<script src="data.js"></script><script src="sheets.js"></script>
+<script>
+(async()=>{
+  const el = document.getElementById('members-grid');
+  try {
+    const members = await fetchMembers();
+    el.innerHTML = members.map(m=>{
+      const links = [
+        m.website&&m.website!=='#'?`<a href="${m.website}" target="_blank" class="member-link">Website</a>`:'',
+        m.scholar&&m.scholar!=='#'?`<a href="${m.scholar}" target="_blank" class="member-link">Google Scholar</a>`:'',
+      ].join('');
+      return `<div class="member-card"><div class="member-top"><div class="member-avatar ${m.color||'c1'}">${m.initials}</div><div><div class="member-name">${m.name}</div><div class="member-role">${m.role}</div></div></div><div class="member-affil">${m.affil}</div><div class="member-links">${links}</div></div>`;
+    }).join('');
+  } catch(e) { showError(el,'Google Sheets 연결을 확인해주세요.'); }
+})();
+</script>
+</body></html>

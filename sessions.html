@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Sessions — Weekly ISSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--burgundy:#8a0019;--burgundy-dk:#5b0013;--burgundy-lt:#f5eaed;--ink:#1c1c1e;--ink-soft:#444448;--muted:#888892;--paper:#ffffff;--bg:#f8f7f7;--line:#e4e0e1}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body,input,select,textarea,button{font-family:'Fira Sans',sans-serif}
+    body{font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg)}a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:200;height:52px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3rem}
+    .nav-logo{font-family:'Fira Code',monospace;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;color:var(--burgundy)}
+    .nav-links{list-style:none;display:flex;gap:2.5rem}.nav-links a{font-size:0.82rem;color:var(--muted);transition:color .15s}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);font-weight:500}
+    .page-header{background:var(--paper);border-bottom:1px solid var(--line);padding:3rem 3rem 2.5rem}.page-header-inner{max-width:1100px;margin:0 auto}
+    .back{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;display:inline-flex;align-items:center;gap:4px;transition:color .15s}.back:hover{color:var(--ink)}
+    .page-header h1{font-size:2rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.4rem}.page-header p{font-size:0.88rem;color:var(--muted)}
+    .filters{max-width:1100px;margin:0 auto;padding:1.5rem 3rem;display:flex;gap:0.5rem}
+    .filter-btn{font-size:0.72rem;font-weight:500;padding:4px 12px;border:1px solid var(--line);border-radius:2px;background:var(--paper);cursor:pointer;color:var(--muted);transition:all .15s}
+    .filter-btn:hover{color:var(--ink);border-color:var(--ink-soft)}.filter-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .sessions-wrap{max-width:1100px;margin:0 auto;padding:0 3rem 4rem}
+    .group-label{font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.5rem 0;border-bottom:1px solid var(--line);margin-bottom:1px}
+    .session-row{background:var(--paper);border-bottom:1px solid var(--line);padding:1.4rem 1.6rem;display:grid;grid-template-columns:120px 1fr auto;gap:1.5rem;align-items:start;transition:background .12s;border-left:3px solid transparent}
+    .session-row:hover{background:#fdf9fa}.session-row.featured{border-left-color:var(--burgundy)}
+    .row-week{font-family:'Fira Code',monospace;font-size:0.66rem;color:var(--muted);padding-top:3px}
+    .row-body h3{font-size:0.92rem;font-weight:600;margin-bottom:0.35rem;line-height:1.4}
+    .tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+    .tag-paper{background:var(--burgundy-lt);color:var(--burgundy)}.tag-open{background:#f5f0e8;color:#7a5500}
+    .tags-row{display:flex;gap:0.4rem;margin-bottom:0.5rem;flex-wrap:wrap}
+    .mini-talks{display:flex;flex-direction:column;gap:0.5rem;margin:0.3rem 0 0.5rem}
+    .mini-talk{display:flex;align-items:baseline;gap:0.75rem}
+    .presenter-chip{display:flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--ink-soft);flex-shrink:0;min-width:160px}
+    .avatar{width:22px;height:22px;border-radius:50%;background:var(--burgundy-lt);color:var(--burgundy);font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5}
+    .row-links{display:flex;flex-direction:column;gap:0.4rem;align-items:flex-end;padding-top:2px}
+    .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block;white-space:nowrap}
+    .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.pill-red{color:var(--burgundy);border-color:#e0bec5}.pill-red:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+    .site-footer{border-top:1px solid var(--line);background:var(--paper);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted)}
+    .site-footer-name{font-size:0.78rem;font-weight:500;color:var(--ink-soft)}.site-footer-links{display:flex;gap:1.5rem}
+    .site-footer-links a{color:var(--muted);transition:color .15s}.site-footer-links a:hover{color:var(--ink)}
+    .loading{padding:2rem;text-align:center;font-size:0.82rem;color:var(--muted)}
+    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.page-header{padding:2rem 1.5rem 1.75rem}.filters{padding:1rem 1.5rem}.sessions-wrap{padding:0 1.5rem 3rem}.session-row{grid-template-columns:1fr;gap:0.5rem}.row-links{flex-direction:row;align-items:flex-start}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Weekly ISSS</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sessions.html" class="active">Sessions</a></li>
+    <li><a href="members.html">Members</a></li>
+  </ul>
+</nav>
+<div class="page-header"><div class="page-header-inner">
+  <a href="index.html" class="back">&larr; Home</a>
+  <h1>Sessions</h1><p>All seminar sessions — paper reviews and open sharing.</p>
+</div></div>
+<div class="filters">
+  <button class="filter-btn active" onclick="filter(this,'all')">All</button>
+  <button class="filter-btn" onclick="filter(this,'open')">Open Session</button>
+  <button class="filter-btn" onclick="filter(this,'paper')">Paper Review</button>
+</div>
+<div class="sessions-wrap">
+  <div class="group-label">2026 Spring</div>
+  <div id="session-rows"><div class="loading">Loading…</div></div>
+</div>
+<div style="background:var(--paper)"><footer class="site-footer">
+  <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
+  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="https://youtube.com" target="_blank">YouTube</a><a href="members.html">Members</a></div>
+</footer></div>
+<script src="data.js"></script><script src="sheets.js"></script>
+<script>
+const pad = n => String(n).padStart(2,'0');
+(async()=>{
+  const el = document.getElementById('session-rows');
+  try {
+    const sessions = await fetchSessions();
+    el.innerHTML = sessions.map((s,i)=>{
+      const meta = TYPE_META[s.type]||TYPE_META.paper;
+      const title = s.talks.length>1?'Open Sharing — Three Talks':s.talks[0].title;
+      const talks = s.talks.map(t=>`<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div></div>`).join('');
+      const yt = s.talks.find(t=>t.youtube), pdf = s.talks.find(t=>t.slides);
+      const links = (yt||pdf)?`${yt?`<a href="${yt.youtube}" target="_blank" class="pill pill-red">YouTube</a>`:''} ${pdf?`<a href="${pdf.slides}" target="_blank" class="pill">Slides</a>`:''}` :'—';
+      return `<div class="session-row ${i===0?'featured':''}" data-type="${s.type}"><div class="row-week">Week ${pad(s.week)}<br>${s.date}</div><div class="row-body"><div class="tags-row"><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div></div><div class="row-links">${links}</div></div>`;
+    }).join('');
+  } catch(e) { showError(el,'Google Sheets 연결을 확인해주세요.'); }
+})();
+function filter(btn,type){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.session-row').forEach(r=>{ r.style.display=(type==='all'||r.dataset.type===type)?'':'none'; });
+}
+</script>
+</body></html>

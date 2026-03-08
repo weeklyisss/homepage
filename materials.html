@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Materials — Weekly ISSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--burgundy:#8a0019;--burgundy-dk:#5b0013;--burgundy-lt:#f5eaed;--ink:#1c1c1e;--ink-soft:#444448;--muted:#888892;--paper:#ffffff;--bg:#f8f7f7;--line:#e4e0e1}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body,input,select,textarea,button{font-family:'Fira Sans',sans-serif}
+    body{font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg)}a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:200;height:52px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3rem}
+    .nav-logo{font-family:'Fira Code',monospace;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;color:var(--burgundy)}
+    .nav-links{list-style:none;display:flex;gap:2.5rem}.nav-links a{font-size:0.82rem;color:var(--muted);transition:color .15s}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);font-weight:500}
+    .page-header{background:var(--paper);border-bottom:1px solid var(--line);padding:3rem 3rem 2.5rem}
+    .page-header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem}
+    .back{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;display:inline-flex;align-items:center;gap:4px;transition:color .15s}.back:hover{color:var(--ink)}
+    .page-header h1{font-size:2rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:0.4rem}.page-header p{font-size:0.88rem;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:0.55rem 1.15rem;font-size:0.82rem;font-weight:500;border-radius:2px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+    .btn-primary{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}.btn-primary:hover{background:var(--burgundy-dk)}
+    .btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}.btn-outline:hover{border-color:var(--ink-soft)}
+    .materials-wrap{max-width:1100px;margin:0 auto;padding:2.5rem 3rem 4rem}
+    .table-block{background:var(--paper);border:1px solid var(--line);margin-bottom:2.5rem}
+    .table-block-header{padding:0.85rem 1.4rem;border-bottom:1px solid var(--line);background:var(--bg);font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)}
+    table{width:100%;border-collapse:collapse}
+    thead th{font-size:0.65rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);padding:0.6rem 1.4rem;text-align:left;border-bottom:1px solid var(--line)}
+    tbody td{padding:0.9rem 1.4rem;font-size:0.82rem;border-bottom:1px solid var(--line);vertical-align:middle}
+    tbody tr:last-child td{border-bottom:none}tbody tr:hover td{background:#fdf9fa}
+    .td-week{font-family:'Fira Code',monospace;font-size:0.68rem;color:var(--muted);white-space:nowrap}
+    .tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+    .tag-paper{background:var(--burgundy-lt);color:var(--burgundy)}.tag-ideation{background:#eef0f8;color:#3a4a8a}.tag-open{background:#f5f0e8;color:#7a5500}
+    .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block;margin-right:4px}
+    .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.pill-red{color:var(--burgundy);border-color:#e0bec5}.pill-red:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+    .site-footer{border-top:1px solid var(--line);background:var(--paper);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted)}
+    .site-footer-name{font-size:0.78rem;font-weight:500;color:var(--ink-soft)}.site-footer-links{display:flex;gap:1.5rem}
+    .site-footer-links a{color:var(--muted);transition:color .15s}.site-footer-links a:hover{color:var(--ink)}
+    .loading{padding:2rem;text-align:center;font-size:0.82rem;color:var(--muted)}
+    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.page-header{padding:2rem 1.5rem 1.75rem}.page-header-inner{flex-direction:column;align-items:flex-start;gap:1rem}.materials-wrap{padding:2rem 1.5rem 3rem}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Weekly ISSS</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="sessions.html">Sessions</a></li>
+    <li><a href="members.html">Members</a></li><li><a href="materials.html" class="active">Materials</a></li>
+  </ul>
+</nav>
+<div class="page-header"><div class="page-header-inner">
+  <div><a href="index.html" class="back">&larr; Home</a><h1>Materials</h1><p>Slides and resources from all sessions.</p></div>
+  <a href="https://docs.google.com/spreadsheets/d/1ChEqnXFiOLagsisJjXSud7FybiLpJ0hgSddZWfNTPSM" target="_blank" class="btn btn-primary">+ Add to Sheet</a>
+</div></div>
+<div class="materials-wrap">
+  <div class="table-block">
+    <div class="table-block-header">2026 Spring</div>
+    <table>
+      <thead><tr><th>Week</th><th>Presenter</th><th>Title</th><th>Type</th><th>Files</th></tr></thead>
+      <tbody id="materials-tbody"><tr><td colspan="5" class="loading">Loading…</td></tr></tbody>
+    </table>
+  </div>
+</div>
+<div style="background:var(--paper)"><footer class="site-footer">
+  <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
+  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="https://youtube.com" target="_blank">YouTube</a><a href="sessions.html">Sessions</a></div>
+</footer></div>
+<script src="data.js"></script><script src="sheets.js"></script>
+<script>
+const pad = n => String(n).padStart(2,'0');
+(async()=>{
+  const el = document.getElementById('materials-tbody');
+  try {
+    const sessions = await fetchSessions();
+    el.innerHTML = sessions.flatMap(s => s.talks.map(t => {
+      const meta = TYPE_META[s.type]||TYPE_META.paper;
+      const files = [
+        t.slides  ? `<a href="${t.slides}"  target="_blank" class="pill">Slides</a>` : '',
+        t.youtube ? `<a href="${t.youtube}" target="_blank" class="pill pill-red">YouTube</a>` : '',
+      ].join('') || '—';
+      return `<tr><td class="td-week">${pad(s.week)} · ${s.date}</td><td>${t.presenter}</td><td>${t.title}</td><td><span class="tag ${meta.cls}">${meta.label}</span></td><td>${files}</td></tr>`;
+    })).join('');
+  } catch(e) { el.innerHTML = `<tr><td colspan="5" class="loading">Google Sheets 연결을 확인해주세요.</td></tr>`; }
+})();
+</script>
+</body></html>

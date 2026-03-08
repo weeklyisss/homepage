@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly ISSS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--burgundy:#8a0019;--burgundy-dk:#5b0013;--burgundy-lt:#f5eaed;--ink:#1c1c1e;--ink-soft:#444448;--muted:#888892;--paper:#ffffff;--bg:#f8f7f7;--line:#e4e0e1}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    html,body,input,select,textarea,button{font-family:'Fira Sans',sans-serif}
+    body{font-size:15px;line-height:1.65;color:var(--ink);background:var(--bg)}a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:200;height:52px;background:var(--paper);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 3rem}
+    .nav-logo{font-family:'Fira Code',monospace;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;color:var(--burgundy)}
+    .nav-links{list-style:none;display:flex;gap:2.5rem}.nav-links a{font-size:0.82rem;color:var(--muted);transition:color .15s}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);font-weight:500}
+    .hero-wrap{background:var(--paper);border-bottom:1px solid var(--line)}.hero{max-width:1100px;margin:0 auto;padding:5rem 3rem 4rem}
+    .hero-eyebrow{font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem}
+    .hero h1{font-size:3rem;font-weight:600;line-height:1.08;letter-spacing:-0.02em;margin-bottom:1.25rem}.hero h1 span{color:var(--burgundy)}
+    .hero-sub{font-size:0.92rem;color:var(--ink-soft);max-width:520px;line-height:1.8;margin-bottom:2rem}.hero-actions{display:flex;gap:0.7rem}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:0.55rem 1.15rem;font-size:0.82rem;font-weight:500;border-radius:2px;cursor:pointer;transition:all .15s;border:1px solid transparent}
+    .btn-primary{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}.btn-primary:hover{background:var(--burgundy-dk)}
+    .btn-outline{background:transparent;color:var(--ink);border-color:var(--line)}.btn-outline:hover{border-color:var(--ink-soft)}
+    .about-bar{background:var(--paper);border-bottom:1px solid var(--line)}.about-bar-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+    .about-item{padding:1.75rem 2.5rem;border-right:1px solid var(--line)}.about-item:last-child{border-right:none}
+    .about-item-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--burgundy);margin-bottom:0.4rem}
+    .about-item h3{font-size:0.9rem;font-weight:600;margin-bottom:0.3rem}.about-item p{font-size:0.8rem;color:var(--muted);line-height:1.7}
+    .main{max-width:1100px;margin:0 auto;padding:3.5rem 3rem;display:grid;grid-template-columns:1fr 268px;gap:3.5rem;align-items:start}
+    .section-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:0.65rem;border-bottom:2px solid var(--ink);margin-bottom:1.5rem}
+    .section-head h2{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase}
+    .section-head a{font-size:0.75rem;font-weight:500;color:var(--burgundy);transition:opacity .15s}.section-head a:hover{opacity:.65}
+    .session-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line)}
+    .session-card{background:var(--paper);padding:1.4rem 1.6rem;transition:background .12s}.session-card:hover{background:#fdf9fa}
+    .session-card.featured{border-left:3px solid var(--burgundy)}
+    .session-top{display:flex;align-items:center;gap:0.65rem;margin-bottom:0.5rem;flex-wrap:wrap}
+    .session-week{font-family:'Fira Code',monospace;font-size:0.66rem;color:var(--muted);letter-spacing:0.05em}
+    .tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+    .tag-paper{background:var(--burgundy-lt);color:var(--burgundy)}.tag-open{background:#f5f0e8;color:#7a5500}
+    .session-card h3{font-size:0.92rem;font-weight:600;line-height:1.4;margin-bottom:0.6rem}
+    .mini-talks{display:flex;flex-direction:column;gap:0.55rem;margin-bottom:0.5rem}
+    .mini-talk{display:flex;align-items:baseline;gap:0.75rem}
+    .presenter-chip{display:flex;align-items:center;gap:6px;font-size:0.76rem;color:var(--ink-soft);flex-shrink:0;min-width:160px}
+    .avatar{width:22px;height:22px;border-radius:50%;background:var(--burgundy-lt);color:var(--burgundy);font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .mini-talk-title{font-size:0.8rem;color:var(--muted);border-left:2px solid var(--line);padding-left:0.75rem;line-height:1.5}
+    .session-links{display:flex;gap:0.45rem;margin-top:0.9rem}
+    .pill{font-size:0.7rem;font-weight:500;padding:3px 10px;border:1px solid var(--line);border-radius:2px;color:var(--ink-soft);transition:all .12s;display:inline-block}
+    .pill:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.pill-red{color:var(--burgundy);border-color:#e0bec5}.pill-red:hover{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+    .sidebar{display:flex;flex-direction:column;gap:1.75rem;position:sticky;top:68px}.sidebar-block{background:var(--paper);border:1px solid var(--line)}
+    .sidebar-head{padding:0.75rem 1.2rem;border-bottom:1px solid var(--line);font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+    .sched-item{display:flex;gap:0.85rem;padding:0.9rem 1.2rem;border-bottom:1px solid var(--line)}.sched-item:last-child{border-bottom:none}
+    .sched-item.next{background:var(--burgundy-lt)}.sched-date{font-family:'Fira Code',monospace;font-size:0.64rem;color:var(--muted);white-space:nowrap;padding-top:3px;min-width:52px}
+    .sched-item.next .sched-date{color:var(--burgundy);font-weight:500}.sched-title{font-size:0.78rem;font-weight:500;line-height:1.4}.sched-sub{font-size:0.7rem;color:var(--muted);margin-top:2px}
+    .yt-section{background:var(--burgundy-dk);padding:3.5rem 0}.yt-inner{max-width:1100px;margin:0 auto;padding:0 3rem}
+    .yt-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:0.65rem;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:1.5rem}
+    .yt-header h2{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+    .yt-header a{font-size:0.75rem;color:rgba(255,255,255,.5);transition:color .15s}.yt-header a:hover{color:#fff}
+    .yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+    .yt-card{background:rgba(255,255,255,.03);transition:background .15s;display:block}.yt-card:hover{background:rgba(255,255,255,.08)}
+    .yt-thumb{aspect-ratio:16/9;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+    .yt-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .yt-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .yt-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.25);opacity:0;transition:opacity .2s}
+    .yt-card:hover .yt-play-overlay{opacity:1}
+    .yt-play{width:44px;height:30px;background:rgba(180,0,0,.92);border-radius:5px;display:flex;align-items:center;justify-content:center}
+    .yt-play::after{content:'';border-style:solid;border-width:6px 0 6px 12px;border-color:transparent transparent transparent white;margin-left:2px}
+    .yt-info{padding:0.85rem 1rem}.yt-info h4{font-size:0.8rem;font-weight:500;color:rgba(255,255,255,.85);line-height:1.5;margin-bottom:0.3rem}
+    .yt-meta{font-family:'Fira Code',monospace;font-size:0.62rem;color:rgba(255,255,255,.3)}
+    .site-footer{border-top:1px solid var(--line);background:var(--paper);padding:2rem 3rem;max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:0.76rem;color:var(--muted)}
+    .site-footer-name{font-size:0.78rem;font-weight:500;color:var(--ink-soft)}.site-footer-links{display:flex;gap:1.5rem}
+    .site-footer-links a{color:var(--muted);transition:color .15s}.site-footer-links a:hover{color:var(--ink)}
+    .loading{padding:2rem;text-align:center;font-size:0.82rem;color:var(--muted)}
+    @media(max-width:800px){nav{padding:0 1.5rem}.nav-links{gap:1.25rem}.hero{padding:3rem 1.5rem 2.5rem}.about-bar-inner{grid-template-columns:1fr}.about-item{border-right:none;border-bottom:1px solid var(--line);padding:1.25rem 1.5rem}.main{grid-template-columns:1fr;padding:2.5rem 1.5rem;gap:2.5rem}.sidebar{position:static}.yt-inner{padding:0 1.5rem}.site-footer{padding:1.5rem;flex-direction:column;gap:0.75rem;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Weekly ISSS</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="sessions.html">Sessions</a></li>
+    <li><a href="members.html">Members</a></li>
+  </ul>
+</nav>
+<div class="hero-wrap"><div class="hero">
+  <div class="hero-eyebrow">Information Systems Seminar Series</div>
+  <h1>Weekly<br><span>ISSS</span></h1>
+  <p class="hero-sub">Baby IS scholars doing our thing — a small, casual seminar where we review papers, take turns presenting, and figure things out together.</p>
+  <div class="hero-actions">
+    <a href="sessions.html" class="btn btn-primary">Browse sessions</a>
+    <a href="members.html" class="btn btn-outline">Members</a>
+  </div>
+</div></div>
+<div class="about-bar"><div class="about-bar-inner">
+  <div class="about-item"><div class="about-item-label">Goal 01</div><h3>Keep Up</h3><p>Review recent IS papers and working papers before they pass us by.</p></div>
+  <div class="about-item"><div class="about-item-label">Goal 02</div><h3>Practice Out Loud</h3><p>Present in English, on camera — because the job market waits for no one.</p></div>
+  <div class="about-item"><div class="about-item-label">Goal 03</div><h3>Not Alone</h3><p>A small corner of the internet where junior PhD students share ideas, stuck papers, and the occasional existential crisis.</p></div>
+</div></div>
+<div class="main">
+  <div>
+    <div class="section-head"><h2>Recent Sessions</h2><a href="sessions.html">View all &rarr;</a></div>
+    <div class="session-list" id="recent-sessions"><div class="loading">Loading…</div></div>
+  </div>
+  <aside class="sidebar">
+    <div class="sidebar-block">
+      <div class="sidebar-head">Schedule</div>
+      <div id="schedule-list">
+        <div class="sched-item"><div class="sched-date">Mar 09</div><div><div class="sched-title">Open Session</div><div class="sched-sub">Edgar, Sue, Jane</div></div></div>
+        <div class="sched-item next"><div class="sched-date">Mar 23</div><div><div class="sched-title">Paper Review + Ideation</div><div class="sched-sub">Next session</div></div></div>
+        <div class="sched-item"><div class="sched-date">Apr 06</div><div><div class="sched-title">Paper Review + Ideation</div><div class="sched-sub">TBD</div></div></div>
+        <div class="sched-item"><div class="sched-date">Apr 20</div><div><div class="sched-title">Paper Review + Ideation</div><div class="sched-sub">TBD</div></div></div>
+      </div>
+    </div>
+    <div class="sidebar-block">
+      <div class="sidebar-head">Contact</div>
+      <div style="padding:1rem 1.2rem;font-size:0.8rem;color:var(--ink-soft);line-height:1.7">Mon 9 PM KST · Online<br><a href="mailto:weeklyisss@gmail.com" style="color:var(--burgundy)">weeklyisss@gmail.com</a></div>
+    </div>
+  </aside>
+</div>
+<div class="yt-section"><div class="yt-inner">
+  <div class="yt-header"><h2>YouTube</h2><a href="https://youtube.com" target="_blank">Subscribe &rarr;</a></div>
+  <div class="yt-grid" id="yt-grid"><div class="loading" style="color:rgba(255,255,255,.3)">Loading…</div></div>
+</div></div>
+<div style="background:var(--paper)"><footer class="site-footer">
+  <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
+  <div class="site-footer-links">
+    <a href="mailto:weeklyisss@gmail.com">Contact</a>
+    <a href="https://youtube.com" target="_blank">YouTube</a>
+    <a href="sessions.html">Sessions</a>
+    <a href="members.html">Members</a>
+  </div>
+</footer></div>
+<script src="data.js"></script><script src="sheets.js"></script>
+<script>
+const pad = n => String(n).padStart(2,'0');
+function getYouTubeId(url) {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function cardHTML(s, featured) {
+  const meta = TYPE_META[s.type] || TYPE_META.paper;
+  const title = s.talks.length > 1 ? 'Open Sharing — Three Talks' : s.talks[0].title;
+  const talks = s.talks.map(t => `<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div></div>`).join('');
+  const yt = s.talks.find(t=>t.youtube), pdf = s.talks.find(t=>t.slides);
+  const links = (yt||pdf) ? `<div class="session-links">${yt?`<a href="${yt.youtube}" target="_blank" class="pill pill-red">Watch on YouTube</a>`:''} ${pdf?`<a href="${pdf.slides}" target="_blank" class="pill">Slides (PDF)</a>`:''}</div>` : '';
+  return `<div class="session-card ${featured?'featured':''}"><div class="session-top"><span class="session-week">Week ${pad(s.week)} · ${s.date}</span><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div>${links}</div>`;
+}
+function ytCardHTML(v) {
+  const vid = getYouTubeId(v.youtube);
+  const thumbUrl = vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : null;
+  const thumb = thumbUrl
+    ? `<img src="${thumbUrl}" alt="${v.title}" loading="lazy">`
+    : `<div class="yt-thumb-placeholder"><div class="yt-play"></div></div>`;
+  return `<a href="${v.youtube}" target="_blank" class="yt-card"><div class="yt-thumb">${thumb}<div class="yt-play-overlay"><div class="yt-play"></div></div></div><div class="yt-info"><h4>${v.title} — ${v.presenter}</h4><div class="yt-meta">Week ${pad(v.week)} · ${v.date}</div></div></a>`;
+}
+(async()=>{
+  const el = document.getElementById('recent-sessions');
+  const ytGrid = document.getElementById('yt-grid');
+  try {
+    const sessions = await fetchSessions();
+    el.innerHTML = sessions.slice(0,3).map((s,i)=>cardHTML(s,i===0)).join('');
+    const vids = sessions.flatMap(s=>s.talks.filter(t=>t.youtube).map(t=>({...t,date:s.date,week:s.week})));
+    ytGrid.innerHTML = vids.length
+      ? vids.map(v=>ytCardHTML(v)).join('')
+      : `<div class="yt-card"><div class="yt-info" style="padding:1.5rem"><h4 style="color:rgba(255,255,255,.5)">Sessions coming soon — subscribe for updates.</h4></div></div>`;
+  } catch(e) {
+    showError(el,'Google Sheets 연결을 확인해주세요.');
+    ytGrid.innerHTML='';
+  }
+})();
+</script>
+</body></html>
