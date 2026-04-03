@@ -68,15 +68,15 @@
 </div>
 <div style="background:var(--paper)"><footer class="site-footer">
   <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
-  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="https://youtube.com" target="_blank">YouTube</a><a href="members.html">Members</a></div>
+  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="members.html">Members</a></div>
 </footer></div>
 <script src="data.js"></script><script src="sheets.js"></script>
 <script>
 const pad = n => String(n).padStart(2,'0');
 function talkHTML(t) {
   const links = [
-    t.youtube ? `<a href="${t.youtube}" target="_blank" class="pill pill-red">YouTube</a>` : '',
-    t.slides   ? `<a href="${t.slides}"  target="_blank" class="pill">Slides</a>`          : '',
+    t.slides     ? `<a href="#" onclick="handleSlidesClick('${t.slides}',event)" class="pill">Slides</a>` : '',
+    t.screenshot ? `<a href="${t.screenshot}" target="_blank" class="pill pill-red">Screenshot</a>` : '',
   ].filter(Boolean).join('');
   return `<div class="mini-talk"><div class="presenter-chip"><div class="avatar">${t.initials}</div>${t.presenter}</div><div class="mini-talk-title">${t.title}</div>${links ? `<div class="talk-links">${links}</div>` : ''}</div>`;
 }
@@ -86,7 +86,7 @@ function talkHTML(t) {
     const sessions = await fetchSessions();
     el.innerHTML = sessions.map((s,i)=>{
       const meta = TYPE_META[s.type]||TYPE_META.paper;
-      const title = s.talks.length>1?'Open Sharing — Three Talks':s.talks[0].title;
+      const title = s.talks.length>1?(s.type==='paper'?'Paper Review':'Open Sharing — Three Talks'):s.talks[0].title;
       const talks = s.talks.map(t=>talkHTML(t)).join('');
       return `<div class="session-row ${i===0?'featured':''}" data-type="${s.type}"><div class="row-week">Week ${pad(s.week)}<br>${s.date}</div><div class="row-body"><div class="tags-row"><span class="tag ${meta.cls}">${meta.label}</span></div><h3>${title}</h3><div class="mini-talks">${talks}</div></div></div>`;
     }).join('');
@@ -97,5 +97,6 @@ function filter(btn,type){
   btn.classList.add('active');
   document.querySelectorAll('.session-row').forEach(r=>{ r.style.display=(type==='all'||r.dataset.type===type)?'':'none'; });
 }
+injectSlidesModal();
 </script>
 </body></html>

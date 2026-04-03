@@ -63,7 +63,7 @@
 </div>
 <div style="background:var(--paper)"><footer class="site-footer">
   <span class="site-footer-name">Weekly ISSS — Est. 2026</span>
-  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="https://youtube.com" target="_blank">YouTube</a><a href="sessions.html">Sessions</a></div>
+  <div class="site-footer-links"><a href="mailto:weeklyisss@gmail.com">Contact</a><a href="sessions.html">Sessions</a></div>
 </footer></div>
 <script src="data.js"></script><script src="sheets.js"></script>
 <script>
@@ -75,12 +75,13 @@ const pad = n => String(n).padStart(2,'0');
     el.innerHTML = sessions.flatMap(s => s.talks.map(t => {
       const meta = TYPE_META[s.type]||TYPE_META.paper;
       const files = [
-        t.slides  ? `<a href="${t.slides}"  target="_blank" class="pill">Slides</a>` : '',
-        t.youtube ? `<a href="${t.youtube}" target="_blank" class="pill pill-red">YouTube</a>` : '',
+        t.slides     ? `<a href="#" onclick="handleSlidesClick('${t.slides}',event)" class="pill">Slides</a>` : '',
+        t.screenshot ? `<a href="${t.screenshot}" target="_blank" class="pill pill-red">Screenshot</a>` : '',
       ].join('') || '—';
       return `<tr><td class="td-week">${pad(s.week)} · ${s.date}</td><td>${t.presenter}</td><td>${t.title}</td><td><span class="tag ${meta.cls}">${meta.label}</span></td><td>${files}</td></tr>`;
     })).join('');
   } catch(e) { el.innerHTML = `<tr><td colspan="5" class="loading">Google Sheets 연결을 확인해주세요.</td></tr>`; }
 })();
+injectSlidesModal();
 </script>
 </body></html>
